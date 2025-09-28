@@ -1,0 +1,7 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#fce4ec"/>
+  <path d="M150 140c-20-20-50-20-50 0s30 40 50 40 50-20 50-40-30-20-50 0z" fill="#e91e63"/>
+  <circle cx="120" cy="80" r="15" fill="#f8bbd9"/>
+  <circle cx="180" cy="80" r="15" fill="#f8bbd9"/>
+  <text x="150" y="170" text-anchor="middle" fill="#ad1457" font-family="Arial, sans-serif" font-size="12">Success Story</text>
+</svg>

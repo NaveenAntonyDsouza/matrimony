@@ -1,0 +1,29 @@
+# Copy this to .env file in backend directory
+
+# Database
+MONGODB_URI=mongodb://localhost:27017/shaadi-clone
+
+# JWT
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRE=7d
+
+# Server
+PORT=5000
+NODE_ENV=development
+
+# API Base URL
+API_BASE_URL=http://localhost:5000
+
+# PhonePe Configuration (Your Credentials)
+PHONEPE_MERCHANT_ID=SU2509191910120899506220
+PHONEPE_SALT_KEY=3cd9c463-9e15-4654-9485-6227d8b988af
+PHONEPE_SALT_INDEX=1
+PHONEPE_BASE_URL=https://api-preprod.phonepe.com/apis/pg-sandbox
+PHONEPE_REDIRECT_URL=http://localhost:3000/payment/callback
+
+# Email Configuration (for password reset)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+
