@@ -3,6 +3,14 @@ const axios = require('axios');
 
 class PhonePeService {
   constructor() {
+    // Debug logging for environment variables
+    console.log('🔍 PhonePe Environment Variables Debug:');
+    console.log('PHONEPE_MERCHANT_ID:', process.env.PHONEPE_MERCHANT_ID ? '✅ Set' : '❌ Missing');
+    console.log('PHONEPE_SALT_KEY:', process.env.PHONEPE_SALT_KEY ? '✅ Set' : '❌ Missing');
+    console.log('PHONEPE_SALT_INDEX:', process.env.PHONEPE_SALT_INDEX ? '✅ Set' : '❌ Missing');
+    console.log('PHONEPE_BASE_URL:', process.env.PHONEPE_BASE_URL ? '✅ Set' : '❌ Missing');
+    console.log('PHONEPE_REDIRECT_URL:', process.env.PHONEPE_REDIRECT_URL ? '✅ Set' : '❌ Missing');
+    
     this.merchantId = process.env.PHONEPE_MERCHANT_ID;
     this.saltKey = process.env.PHONEPE_SALT_KEY;
     this.saltIndex = process.env.PHONEPE_SALT_INDEX;
@@ -11,7 +19,13 @@ class PhonePeService {
     
     // Validate required environment variables
     if (!this.merchantId || !this.saltKey || !this.saltIndex || !this.baseUrl || !this.redirectUrl) {
-      throw new Error('Missing required PhonePe environment variables. Please check your .env file.');
+      console.error('❌ Missing PhonePe environment variables:');
+      console.error('PHONEPE_MERCHANT_ID:', this.merchantId || 'MISSING');
+      console.error('PHONEPE_SALT_KEY:', this.saltKey || 'MISSING');
+      console.error('PHONEPE_SALT_INDEX:', this.saltIndex || 'MISSING');
+      console.error('PHONEPE_BASE_URL:', this.baseUrl || 'MISSING');
+      console.error('PHONEPE_REDIRECT_URL:', this.redirectUrl || 'MISSING');
+      throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
     }
   }
 
