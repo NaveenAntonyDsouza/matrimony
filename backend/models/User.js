@@ -361,8 +361,6 @@ userSchema.methods.getAge = function() {
 
 // Index for search optimization
 userSchema.index({ gender: 1, maritalStatus: 1, religion: 1, caste: 1, city: 1, state: 1, country: 1 });
-userSchema.index({ email: 1 });
-userSchema.index({ phone: 1 });
 userSchema.index({ createdAt: -1 });
 
 module.exports = mongoose.model('User', userSchema);

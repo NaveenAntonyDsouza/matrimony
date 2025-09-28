@@ -13,7 +13,7 @@ MONGODB_URI=mongodb+srv://catholicconnectmatrimony_db_user:x3CnV9HagwsSnJn5@clus
 
 # CORS & Frontend Configuration
 FRONTEND_URL=https://kudlamatrimony.com
-API_BASE_URL=https://your-railway-app-url.railway.app
+API_BASE_URL=https://matrimony-production-1a44.up.railway.app
 
 # PhonePe Payment Configuration (ALL 5 VARIABLES REQUIRED!)
 PHONEPE_MERCHANT_ID=M23GLLQ4N4JQU

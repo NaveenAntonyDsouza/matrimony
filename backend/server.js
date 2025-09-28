@@ -59,10 +59,7 @@ app.use((req, res) => {
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shaadi-clone', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shaadi-clone');
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
