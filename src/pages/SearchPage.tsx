@@ -9,8 +9,6 @@ import {
   CardMedia,
   Button,
   Chip,
-  Avatar,
-  IconButton,
   TextField,
   FormControl,
   InputLabel,
@@ -18,9 +16,6 @@ import {
   MenuItem,
   Slider,
   Paper,
-  Divider,
-  CircularProgress,
-  Alert,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -33,7 +28,6 @@ import {
   Search,
   LocationOn,
   Work,
-  Star,
 } from '@mui/icons-material';
 
 const SearchPage: React.FC = () => {

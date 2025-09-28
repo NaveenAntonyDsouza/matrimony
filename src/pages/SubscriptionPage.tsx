@@ -19,7 +19,6 @@ import {
   DialogContent,
   DialogActions,
   useTheme,
-  useMediaQuery,
 } from '@mui/material';
 import {
   Check,
@@ -53,7 +52,6 @@ const SubscriptionPage: React.FC = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
   const [loading, setLoading] = useState(true);

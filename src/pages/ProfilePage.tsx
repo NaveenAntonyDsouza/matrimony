@@ -20,7 +20,6 @@ import {
   Star,
   LocationOn,
   Work,
-  School,
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 

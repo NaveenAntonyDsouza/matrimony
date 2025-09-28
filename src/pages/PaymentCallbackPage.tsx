@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Container,
@@ -35,11 +35,7 @@ const PaymentCallbackPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [subscription, setSubscription] = useState<any>(null);
 
-  useEffect(() => {
-    handlePaymentCallback();
-  }, []);
-
-  const handlePaymentCallback = async () => {
+  const handlePaymentCallback = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -78,12 +74,17 @@ const PaymentCallbackPage: React.FC = () => {
         setError('Payment verification failed');
       }
     } catch (err: any) {
-      setError(err.message);
+      console.error('Payment verification error:', err);
+      setError(err.message || 'An error occurred during payment verification');
       setPaymentStatus('failed');
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchParams, user, updateUser]);
+
+  useEffect(() => {
+    handlePaymentCallback();
+  }, [handlePaymentCallback]);
 
   const getStatusIcon = () => {
     switch (paymentStatus) {

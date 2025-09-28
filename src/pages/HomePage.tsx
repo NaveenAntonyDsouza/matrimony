@@ -15,17 +15,13 @@ import {
   FormControl,
   InputLabel,
   Stack,
-  Chip,
   useTheme,
   useMediaQuery,
 } from '@mui/material';
 import {
   Search,
-  Favorite,
   Security,
   Verified,
-  Star,
-  ArrowForward,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 

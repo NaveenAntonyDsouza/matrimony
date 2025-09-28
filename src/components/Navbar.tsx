@@ -19,7 +19,6 @@ import {
   Message,
   Person,
   Notifications,
-  Menu as MenuIcon,
   Logout,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
