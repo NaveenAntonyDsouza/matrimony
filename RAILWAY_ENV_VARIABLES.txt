@@ -1,0 +1,43 @@
+# Railway Environment Variables
+# Copy and paste each line as separate variables in Railway dashboard
+# Go to Railway > Your Service > Variables tab > New Variable
+
+# Core Application Settings
+NODE_ENV=production
+PORT=5000
+JWT_SECRET=9x7mP3nQ8vB2kL5wR1tY6uI0oE4aS7dF2hG9jK3mN6pQ1rT4uW8xZ5cV
+JWT_EXPIRE=7d
+
+# Database Configuration (Get from MongoDB Atlas)
+MONGODB_URI=mongodb+srv://catholicconnectmatrimony_db_user:x3CnV9HagwsSnJn5@cluster0.kp3namu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+# CORS & Frontend Configuration
+FRONTEND_URL=https://kudlamatrimony.com
+API_BASE_URL=https://your-railway-app-url.railway.app
+
+# PhonePe Payment Configuration (ALL 5 VARIABLES REQUIRED!)
+PHONEPE_MERCHANT_ID=M23GLLQ4N4JQU
+PHONEPE_SALT_KEY=3cd9c463-9e15-4654-9485-6227d8b988af
+PHONEPE_SALT_INDEX=1
+PHONEPE_BASE_URL=https://api.phonepe.com/apis/hermes
+PHONEPE_REDIRECT_URL=https://kudlamatrimony.com/payment/callback
+
+# Email Configuration (Optional - for password reset)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+
+# INSTRUCTIONS:
+# 1. Replace all "your-xxx" placeholders with actual values
+# 2. Generate a strong JWT_SECRET (use online generator or random string)
+# 3. Get MONGODB_URI from MongoDB Atlas connection string
+# 4. Update FRONTEND_URL with your Hostinger domain later
+# 5. Update API_BASE_URL with Railway-provided URL after deployment
+# 6. Use your actual PhonePe merchant credentials
+# 7. Add each variable separately in Railway Variables tab
+
+# SECURITY NOTES:
+# - Never commit this file with real credentials to Git
+# - Keep your JWT_SECRET, MongoDB URI, and PhonePe keys secure
+# - Use strong, unique passwords for all services
