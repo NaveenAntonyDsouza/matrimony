@@ -122,6 +122,16 @@ router.post('/create-order', [
 
   } catch (error) {
     console.error('Create payment order error:', error);
+    
+    // Check if it's a PhonePe configuration error
+    if (error.message.includes('PhonePe service is not configured')) {
+      return res.status(503).json({
+        success: false,
+        message: 'Payment service is temporarily unavailable. Please contact support.',
+        error: 'Payment gateway not configured'
+      });
+    }
+    
     res.status(500).json({
       success: false,
       message: 'Server error'

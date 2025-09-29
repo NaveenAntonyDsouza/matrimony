@@ -18,14 +18,21 @@ class PhonePeService {
     this.redirectUrl = process.env.PHONEPE_REDIRECT_URL;
     
     // Validate required environment variables
-    if (!this.merchantId || !this.saltKey || !this.saltIndex || !this.baseUrl || !this.redirectUrl) {
+    const missingVars = [];
+    if (!this.merchantId) missingVars.push('PHONEPE_MERCHANT_ID: MISSING');
+    if (!this.saltKey) missingVars.push('PHONEPE_SALT_KEY: MISSING');
+    if (!this.saltIndex) missingVars.push('PHONEPE_SALT_INDEX: MISSING');
+    if (!this.baseUrl) missingVars.push('PHONEPE_BASE_URL: MISSING');
+    if (!this.redirectUrl) missingVars.push('PHONEPE_REDIRECT_URL: MISSING');
+
+    if (missingVars.length > 0) {
       console.error('❌ Missing PhonePe environment variables:');
-      console.error('PHONEPE_MERCHANT_ID:', this.merchantId || 'MISSING');
-      console.error('PHONEPE_SALT_KEY:', this.saltKey || 'MISSING');
-      console.error('PHONEPE_SALT_INDEX:', this.saltIndex || 'MISSING');
-      console.error('PHONEPE_BASE_URL:', this.baseUrl || 'MISSING');
-      console.error('PHONEPE_REDIRECT_URL:', this.redirectUrl || 'MISSING');
-      throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+      missingVars.forEach(varName => console.error(varName));
+      console.warn('⚠️ PhonePe service will be disabled. Payment functionality will not work.');
+      this.isConfigured = false;
+    } else {
+      this.isConfigured = true;
+      console.log('✅ PhonePe service configured successfully');
     }
   }
 
@@ -42,6 +49,10 @@ class PhonePeService {
 
   // Create payment request using PhonePe Standard Checkout API
   async createPaymentRequest(paymentData) {
+    if (!this.isConfigured) {
+      throw new Error('PhonePe service is not configured. Please check environment variables.');
+    }
+    
     try {
       const { amount, userId, planType, duration, userInfo } = paymentData;
       
@@ -104,6 +115,10 @@ class PhonePeService {
 
   // Verify payment status
   async verifyPayment(transactionId) {
+    if (!this.isConfigured) {
+      throw new Error('PhonePe service is not configured. Please check environment variables.');
+    }
+    
     try {
       // For status check, X-VERIFY is generated differently
       const statusEndpoint = `/pg/v1/status/${this.merchantId}/${transactionId}`;
@@ -136,6 +151,10 @@ class PhonePeService {
 
   // Handle payment callback
   async handlePaymentCallback(callbackData) {
+    if (!this.isConfigured) {
+      throw new Error('PhonePe service is not configured. Please check environment variables.');
+    }
+    
     try {
       const { response } = callbackData;
       const decodedResponse = JSON.parse(Buffer.from(response, 'base64').toString());

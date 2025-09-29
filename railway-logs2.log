@@ -1,0 +1,19 @@
+2025-09-28T19:23:20.000000000Z [inf]  Starting Container
+2025-09-28T19:23:21.384987565Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T19:23:21.384995283Z [inf]  
+2025-09-28T19:23:21.385004590Z [inf]  > backend@1.0.0 start
+2025-09-28T19:23:21.385010832Z [inf]  > node server.js
+2025-09-28T19:23:21.385016906Z [inf]  
+2025-09-28T19:23:21.385023158Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+2025-09-28T19:23:21.385029865Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T19:23:21.385039063Z [inf]  PHONEPE_MERCHANT_ID: ✅ Set
+2025-09-28T19:23:21.385046643Z [inf]  PHONEPE_SALT_KEY: ✅ Set
+2025-09-28T19:23:21.385053363Z [inf]  PHONEPE_SALT_INDEX: ✅ Set
+2025-09-28T19:23:21.385059506Z [inf]  PHONEPE_BASE_URL: ✅ Set
+2025-09-28T19:23:21.385066267Z [inf]  PHONEPE_REDIRECT_URL: ✅ Set
+2025-09-28T19:23:21.385074861Z [err]  (node:15) [MONGOOSE] Warning: Duplicate schema index on {"email":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-28T19:23:21.385081062Z [err]  (Use `node --trace-warnings ...` to show where the warning was created)
+2025-09-28T19:23:21.385087572Z [err]  (node:15) [MONGOOSE] Warning: Duplicate schema index on {"phone":1} found. This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+2025-09-28T19:23:21.385095322Z [err]  (node:15) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-09-28T19:23:21.385101342Z [err]  (node:15) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+2025-09-28T19:23:21.385108584Z [inf]  Server running on port 5000

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback, useMemo, ReactNode } from 'react';
 import { authService } from '../services/authService';
 
 interface User {
@@ -141,7 +141,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loadUser();
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string) => {
     try {
       dispatch({ type: 'AUTH_REQUEST' });
       const response = await authService.login(email, password);
@@ -158,9 +158,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       throw error;
     }
-  };
+  }, []);
 
-  const register = async (userData: any) => {
+  const register = useCallback(async (userData: any) => {
     try {
       dispatch({ type: 'AUTH_REQUEST' });
       const response = await authService.register(userData);
@@ -177,29 +177,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       throw error;
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('token');
     dispatch({ type: 'LOGOUT' });
-  };
+  }, []);
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     dispatch({ type: 'CLEAR_ERROR' });
-  };
+  }, []);
 
-  const updateUser = (user: User) => {
+  const updateUser = useCallback((user: User) => {
     dispatch({ type: 'UPDATE_USER', payload: user });
-  };
+  }, []);
 
-  const value: AuthContextType = {
+  const value: AuthContextType = useMemo(() => ({
     ...state,
     login,
     register,
     logout,
     clearError,
     updateUser,
-  };
+  }), [state, login, register, logout, clearError, updateUser]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

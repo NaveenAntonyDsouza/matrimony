@@ -1,0 +1,386 @@
+2025-09-28T18:57:33.000000000Z [inf]  Starting Container
+2025-09-28T18:57:34.572696349Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:34.572701908Z [inf]  
+2025-09-28T18:57:34.572706745Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:34.572711134Z [inf]  > node server.js
+2025-09-28T18:57:34.572715831Z [inf]  
+2025-09-28T18:57:34.572721247Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2025-09-28T18:57:34.572725393Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:34.572730027Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:34.572734279Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:34.572738053Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:34.572744053Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:34.572748125Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:34.572754172Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:34.572758101Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:34.572762221Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:34.572765928Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:34.572771007Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:34.572776396Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:34.572781109Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:34.572787299Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:34.572791096Z [err]        ^
+2025-09-28T18:57:34.572794922Z [err]  
+2025-09-28T18:57:34.572799056Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:34.572806639Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:34.572811067Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:34.572815117Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:34.572820158Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:34.572824638Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:34.572829588Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:34.572833988Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:34.572837961Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:34.572841801Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:34.572852374Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:34.572856545Z [err]  
+2025-09-28T18:57:34.572861044Z [err]  Node.js v18.20.5
+2025-09-28T18:57:35.504963689Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:35.504970446Z [inf]  
+2025-09-28T18:57:35.504978478Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:35.504984499Z [inf]  > node server.js
+2025-09-28T18:57:35.504990133Z [inf]  
+2025-09-28T18:57:35.842354149Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2025-09-28T18:57:35.978968487Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:35.978978111Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:35.978984906Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:35.978991214Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:35.978997689Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:35.979004754Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:35.979010788Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:35.979016654Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:35.979022466Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:35.979029653Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:35.979036342Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:35.979042654Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:35.979050290Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:35.979057538Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:35.979063214Z [err]        ^
+2025-09-28T18:57:35.979069598Z [err]  
+2025-09-28T18:57:35.979076874Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:35.979082989Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:35.979089749Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:35.979096347Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:35.979102714Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:35.979109394Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:35.979115691Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:35.979122762Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:35.979128514Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:35.979134269Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:35.979139797Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:35.979145681Z [err]  
+2025-09-28T18:57:35.979151501Z [err]  Node.js v18.20.5
+2025-09-28T18:57:37.171848672Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:37.210256533Z [inf]  
+2025-09-28T18:57:37.210264930Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:37.210271745Z [inf]  > node server.js
+2025-09-28T18:57:37.210279366Z [inf]  
+2025-09-28T18:57:37.484826469Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2025-09-28T18:57:37.613493466Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:37.613529164Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:37.613534390Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:37.613538762Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:37.613543426Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:37.613547698Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:37.613551819Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:37.613556073Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:37.613559575Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:37.613564285Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:37.613568337Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:37.613572407Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:37.616576941Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:37.616584369Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:37.616588858Z [err]        ^
+2025-09-28T18:57:37.616593231Z [err]  
+2025-09-28T18:57:37.616598057Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:37.616614727Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:37.616619835Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:37.616623897Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:37.616628369Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:37.616633857Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:37.616637884Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:37.616642050Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:37.616645898Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:37.616650383Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:37.616656723Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:37.616660402Z [err]  
+2025-09-28T18:57:37.616664808Z [err]  Node.js v18.20.5
+2025-09-28T18:57:38.654063067Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:38.654067811Z [inf]  
+2025-09-28T18:57:38.654073284Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:38.654078256Z [inf]  > node server.js
+2025-09-28T18:57:38.654085271Z [inf]  
+2025-09-28T18:57:38.935449224Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+2025-09-28T18:57:39.105397597Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:39.105402416Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:39.105407150Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:39.105411136Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:39.105414926Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:39.105419931Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:39.105424621Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:39.105428577Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:39.105435739Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:39.105441261Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:39.105445517Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:39.105450423Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:39.105455152Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:39.105459136Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:39.105462859Z [err]        ^
+2025-09-28T18:57:39.105467891Z [err]  
+2025-09-28T18:57:39.105473223Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:39.105478250Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:39.105482497Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:39.105486548Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:39.105490296Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:39.105495681Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:39.105501205Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:39.105505555Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:39.105509700Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:39.105514182Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:39.105519348Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:39.105523727Z [err]  
+2025-09-28T18:57:39.105528812Z [err]  Node.js v18.20.5
+2025-09-28T18:57:40.162305791Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:40.180457652Z [inf]  
+2025-09-28T18:57:40.180465243Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:40.180470425Z [inf]  > node server.js
+2025-09-28T18:57:40.180474620Z [inf]  
+2025-09-28T18:57:40.510288015Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+2025-09-28T18:57:40.663217562Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:40.663222232Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:40.663227917Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:40.663234804Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:40.663239971Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:40.663244780Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:40.663250322Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:40.663256399Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:40.663263101Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:40.663263328Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:40.663269683Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:40.663277608Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:40.663278777Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:40.663284167Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:40.663292211Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:40.663292305Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:40.663299821Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:40.663307106Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:40.663316353Z [err]        ^
+2025-09-28T18:57:40.663318633Z [err]  
+2025-09-28T18:57:40.663322795Z [err]  
+2025-09-28T18:57:40.663327885Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:40.663332455Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:40.663338845Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:40.663345915Z [err]  Node.js v18.20.5
+2025-09-28T18:57:40.663348481Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:40.663354181Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:40.663358347Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:40.663362783Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:41.861114401Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:41.901511881Z [inf]  
+2025-09-28T18:57:41.901518179Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:41.901524373Z [inf]  > node server.js
+2025-09-28T18:57:41.901531184Z [inf]  
+2025-09-28T18:57:42.237348203Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+2025-09-28T18:57:42.406152331Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:42.406158973Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:42.406190199Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:42.406197116Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:42.406203586Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:42.406211226Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:42.406218991Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:42.406227194Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:42.406234251Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:42.406241906Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:42.406246873Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:42.406252699Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:42.406258267Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:42.406264499Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:42.406270856Z [err]        ^
+2025-09-28T18:57:42.406276806Z [err]  
+2025-09-28T18:57:42.406282282Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:42.406289078Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:42.406295779Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:42.406302048Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:42.406311036Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:42.406315621Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:42.406319987Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:42.406324605Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:42.406329425Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:42.406335300Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:42.406402579Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:42.406409598Z [err]  
+2025-09-28T18:57:42.406418094Z [err]  Node.js v18.20.5
+2025-09-28T18:57:43.559578952Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:43.587525374Z [inf]  
+2025-09-28T18:57:43.587536343Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:43.587543874Z [inf]  > node server.js
+2025-09-28T18:57:43.587551174Z [inf]  
+2025-09-28T18:57:43.954652234Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+2025-09-28T18:57:44.090770879Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:44.090780622Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:44.090787688Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:44.090793776Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:44.090812240Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:44.090819353Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:44.090826029Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:44.090833956Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:44.090840064Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:44.090846048Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:44.090851963Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:44.090858651Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:44.090864536Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:44.090880397Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:44.090886004Z [err]        ^
+2025-09-28T18:57:44.090892305Z [err]  
+2025-09-28T18:57:44.090898504Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:44.090909555Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:44.090917921Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:44.090938383Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:44.090945172Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:44.090951365Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:44.090957300Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:44.090965918Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:44.090972323Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:44.090978196Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:44.090983860Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:44.090993583Z [err]  
+2025-09-28T18:57:44.090999029Z [err]  Node.js v18.20.5
+2025-09-28T18:57:45.444490808Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:45.479748579Z [inf]  
+2025-09-28T18:57:45.479755525Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:45.479760811Z [inf]  > node server.js
+2025-09-28T18:57:45.479767671Z [inf]  
+2025-09-28T18:57:45.748631379Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+2025-09-28T18:57:45.883369572Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:45.883374283Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:45.883378595Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:45.883382810Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:45.883387308Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:45.883392784Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:45.883396769Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:45.883400811Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:45.883405198Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:45.883411409Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:45.883416001Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:45.883420178Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:45.883424160Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:45.883428943Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:45.883433829Z [err]        ^
+2025-09-28T18:57:45.883438499Z [err]  
+2025-09-28T18:57:45.883442514Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:45.883446342Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:45.883450100Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:45.883456893Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:45.883461400Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:45.883465729Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:45.883474719Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:45.883478910Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:45.883483039Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:45.883487844Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:45.883492240Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:45.883496669Z [err]  
+2025-09-28T18:57:45.883500750Z [err]  Node.js v18.20.5
+2025-09-28T18:57:46.942227443Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:46.977108624Z [inf]  
+2025-09-28T18:57:46.977115593Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:46.977120714Z [inf]  > node server.js
+2025-09-28T18:57:46.977125323Z [inf]  
+2025-09-28T18:57:47.270735802Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2025-09-28T18:57:47.424885344Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:47.424889610Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:47.424893674Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:47.424898697Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:47.424904123Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:47.424909465Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:47.424915333Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:47.424919711Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:47.424928898Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:47.424933522Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:47.424938176Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:47.424941942Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:47.424945929Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:47.424952398Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:47.424957455Z [err]        ^
+2025-09-28T18:57:47.424964284Z [err]  
+2025-09-28T18:57:47.424968654Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:47.424972886Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:47.424976964Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:47.424980883Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:47.424985672Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:47.424989743Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:47.424993683Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:47.425059916Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:47.425064118Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:47.425067709Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:47.425071516Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:47.425075425Z [err]  
+2025-09-28T18:57:47.425081974Z [err]  Node.js v18.20.5
+2025-09-28T18:57:48.572558865Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:48.607489893Z [inf]  
+2025-09-28T18:57:48.607496826Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:48.607505431Z [inf]  > node server.js
+2025-09-28T18:57:48.607513203Z [inf]  
+2025-09-28T18:57:48.901251802Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+2025-09-28T18:57:49.061646580Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:49.061657791Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:49.061664450Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:49.061668949Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:49.061674720Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:49.061679617Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:49.061684065Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:49.061688933Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:49.061693261Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:49.061697792Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:49.061701865Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:49.061706443Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:49.061710982Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:49.061714926Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:49.061718993Z [err]        ^
+2025-09-28T18:57:49.061723291Z [err]  
+2025-09-28T18:57:49.061727699Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:49.061732109Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:49.061736491Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:49.061740414Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:49.061744688Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:49.061749487Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:49.061753621Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:49.061758450Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:49.061762027Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:49.061765889Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:49.061770442Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:49.061774360Z [err]  
+2025-09-28T18:57:49.061778946Z [err]  Node.js v18.20.5
+2025-09-28T18:57:50.104138928Z [err]  npm warn config production Use `--omit=dev` instead.
+2025-09-28T18:57:50.144243220Z [inf]  
+2025-09-28T18:57:50.144249960Z [inf]  > backend@1.0.0 start
+2025-09-28T18:57:50.144260834Z [inf]  > node server.js
+2025-09-28T18:57:50.144268728Z [inf]  
+2025-09-28T18:57:50.450744644Z [inf]  [dotenv@17.2.2] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+2025-09-28T18:57:50.592591848Z [inf]  🔍 PhonePe Environment Variables Debug:
+2025-09-28T18:57:50.592602003Z [inf]  PHONEPE_MERCHANT_ID: ❌ Missing
+2025-09-28T18:57:50.592610377Z [inf]  PHONEPE_SALT_KEY: ❌ Missing
+2025-09-28T18:57:50.592619103Z [inf]  PHONEPE_SALT_INDEX: ❌ Missing
+2025-09-28T18:57:50.592626125Z [inf]  PHONEPE_BASE_URL: ❌ Missing
+2025-09-28T18:57:50.592632525Z [inf]  PHONEPE_REDIRECT_URL: ❌ Missing
+2025-09-28T18:57:50.592637546Z [err]  ❌ Missing PhonePe environment variables:
+2025-09-28T18:57:50.592643518Z [err]  PHONEPE_MERCHANT_ID: MISSING
+2025-09-28T18:57:50.596383554Z [err]  PHONEPE_SALT_KEY: MISSING
+2025-09-28T18:57:50.596392213Z [err]  PHONEPE_SALT_INDEX: MISSING
+2025-09-28T18:57:50.596397644Z [err]  PHONEPE_BASE_URL: MISSING
+2025-09-28T18:57:50.596405922Z [err]  PHONEPE_REDIRECT_URL: MISSING
+2025-09-28T18:57:50.596410136Z [err]  /app/services/phonepeService.js:28
+2025-09-28T18:57:50.596415082Z [err]        throw new Error('Missing required PhonePe environment variables. Please check your Railway environment variables.');
+2025-09-28T18:57:50.596421183Z [err]        ^
+2025-09-28T18:57:50.596430096Z [err]  
+2025-09-28T18:57:50.596442838Z [err]  Error: Missing required PhonePe environment variables. Please check your Railway environment variables.
+2025-09-28T18:57:50.596448992Z [err]      at new PhonePeService (/app/services/phonepeService.js:28:13)
+2025-09-28T18:57:50.596455953Z [err]      at Object.<anonymous> (/app/services/phonepeService.js:161:18)
+2025-09-28T18:57:50.596462112Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:50.596470050Z [err]      at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+2025-09-28T18:57:50.596475662Z [err]      at Module.load (node:internal/modules/cjs/loader:1203:32)
+2025-09-28T18:57:50.596480717Z [err]      at Module._load (node:internal/modules/cjs/loader:1019:12)
+2025-09-28T18:57:50.596486415Z [err]      at Module.require (node:internal/modules/cjs/loader:1231:19)
+2025-09-28T18:57:50.596492172Z [err]      at require (node:internal/modules/helpers:177:18)
+2025-09-28T18:57:50.596496304Z [err]      at Object.<anonymous> (/app/routes/payments.js:4:24)
+2025-09-28T18:57:50.596500554Z [err]      at Module._compile (node:internal/modules/cjs/loader:1364:14)
+2025-09-28T18:57:50.596508307Z [err]  
+2025-09-28T18:57:50.596512259Z [err]  Node.js v18.20.5

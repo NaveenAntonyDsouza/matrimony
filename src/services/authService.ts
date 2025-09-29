@@ -53,6 +53,11 @@ class AuthService {
     const data = await response.json();
 
     if (!response.ok) {
+      // Handle detailed validation errors
+      if (data.errors && Array.isArray(data.errors)) {
+        const errorMessages = data.errors.map((err: any) => `${err.path}: ${err.msg}`).join(', ');
+        throw new Error(`${data.message}: ${errorMessages}`);
+      }
       throw new Error(data.message || 'Registration failed');
     }
 
