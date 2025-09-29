@@ -73,13 +73,17 @@ router.post('/create-order', [
       }
     };
 
+    console.log('🔄 Creating PhonePe payment request with data:', paymentData);
     const paymentResult = await phonepeService.createPaymentRequest(paymentData);
+    console.log('📥 PhonePe service result:', paymentResult);
 
     if (!paymentResult.success) {
+      console.error('❌ PhonePe payment creation failed:', paymentResult.error);
       return res.status(500).json({
         success: false,
         message: 'Failed to create payment request',
-        error: paymentResult.error
+        error: paymentResult.error,
+        details: paymentResult.error // Include detailed error for debugging
       });
     }
 
@@ -144,6 +148,8 @@ router.post('/create-order', [
 // @access  Public
 router.post('/callback', async (req, res) => {
   try {
+    console.log('📥 Callback received:', JSON.stringify(req.body, null, 2));
+    
     const callbackResult = await phonepeService.handlePaymentCallback(req.body);
     
     if (!callbackResult.success) {
@@ -213,6 +219,46 @@ router.post('/callback', async (req, res) => {
   }
 });
 
+// @route   GET /api/payments/verify-public/:transactionId
+// @desc    Verify payment status (public endpoint for callback page)
+// @access  Public
+router.get('/verify-public/:transactionId', async (req, res) => {
+  try {
+    const { transactionId } = req.params;
+
+    // Find subscription by payment ID
+    const subscription = await Subscription.findOne({
+      paymentId: transactionId
+    });
+
+    if (!subscription) {
+      return res.status(404).json({
+        success: false,
+        message: 'Subscription not found'
+      });
+    }
+
+    // Return subscription status without requiring authentication
+    const responseToSend = {
+      success: true,
+      paymentStatus: subscription.status === 'Active' ? 'COMPLETED' : 'PENDING',
+      code: subscription.status === 'Active' ? 'PAYMENT_SUCCESS' : 'PAYMENT_PENDING',
+      subscription
+    };
+
+    console.log('📤 Backend - Public verification response:', responseToSend);
+
+    res.json(responseToSend);
+
+  } catch (error) {
+    console.error('Public payment verification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+});
+
 // @route   GET /api/payments/verify/:transactionId
 // @desc    Verify payment status
 // @access  Private
@@ -232,35 +278,72 @@ router.get('/verify/:transactionId', auth, async (req, res) => {
     }
 
     const { data } = verificationResult;
+    
+    // PhonePe v1 API response structure: data.data contains payment details, data.code contains status
     const paymentData = data.data;
+    const responseCode = data.code;
+
+    console.log('🔍 Payment verification details:', {
+      responseCode,
+      paymentState: paymentData?.state,
+      paymentResponseCode: paymentData?.responseCode,
+      transactionId
+    });
 
     // Update subscription based on verification
     const subscription = await Subscription.findOne({
       paymentId: transactionId
     });
 
-    if (subscription) {
-      if (paymentData.state === 'COMPLETED' && paymentData.code === 'PAYMENT_SUCCESS') {
-        subscription.status = 'Active';
-        await subscription.save();
+    console.log('🔍 Subscription lookup:', {
+      transactionId,
+      subscriptionFound: !!subscription,
+      subscriptionId: subscription?._id,
+      subscriptionStatus: subscription?.status
+    });
 
-        // Update user membership
-        await User.findByIdAndUpdate(subscription.user, {
-          membershipType: subscription.planType,
-          membershipExpiry: subscription.endDate
-        });
+    if (subscription) {
+      if (paymentData.state === 'COMPLETED' && responseCode === 'PAYMENT_SUCCESS') {
+        // Only activate if not already active
+        if (subscription.status !== 'Active') {
+          subscription.status = 'Active';
+          await subscription.save();
+
+          // Update user membership
+          await User.findByIdAndUpdate(subscription.user, {
+            membershipType: subscription.planType,
+            membershipExpiry: subscription.endDate
+          });
+
+          console.log('✅ Subscription activated for user:', subscription.user);
+        } else {
+          console.log('ℹ️ Subscription already active for user:', subscription.user);
+        }
       } else {
-        subscription.status = 'Cancelled';
-        await subscription.save();
+        // Only cancel if still pending - don't cancel already active subscriptions
+        if (subscription.status === 'Pending') {
+          subscription.status = 'Cancelled';
+          await subscription.save();
+          console.log('❌ Subscription cancelled due to payment failure');
+        } else if (subscription.status === 'Active') {
+          console.log('⚠️ Payment verification shows PENDING/FAILED but subscription is already Active - keeping Active status');
+          // Override the response to show success since subscription is active
+          paymentData.state = 'COMPLETED';
+          responseCode = 'PAYMENT_SUCCESS';
+        }
       }
     }
 
-    res.json({
+    const responseToSend = {
       success: true,
       paymentStatus: paymentData.state,
-      code: paymentData.code,
+      code: responseCode,
       subscription
-    });
+    };
+
+    console.log('📤 Backend - Sending response to frontend:', responseToSend);
+
+    res.json(responseToSend);
 
   } catch (error) {
     console.error('Payment verification error:', error);

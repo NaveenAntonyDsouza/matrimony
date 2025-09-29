@@ -22,6 +22,16 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Request logging middleware
+app.use((req, res, next) => {
+  if (req.path.includes('/api/payments')) {
+    console.log(`📥 Payment Request: ${req.method} ${req.path}`);
+    console.log('📥 Headers:', JSON.stringify(req.headers, null, 2));
+    console.log('📥 Body:', JSON.stringify(req.body, null, 2));
+  }
+  next();
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));

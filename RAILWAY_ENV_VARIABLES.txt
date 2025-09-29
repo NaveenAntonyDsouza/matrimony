@@ -19,8 +19,9 @@ API_BASE_URL=https://matrimony-production-1a44.up.railway.app
 PHONEPE_MERCHANT_ID=M23GLLQ4N4JQU
 PHONEPE_SALT_KEY=3cd9c463-9e15-4654-9485-6227d8b988af
 PHONEPE_SALT_INDEX=1
-PHONEPE_BASE_URL=https://api.phonepe.com/apis/hermes
+PHONEPE_BASE_URL=https://api-preprod.phonepe.com/apis/pg-sandbox
 PHONEPE_REDIRECT_URL=https://kudlamatrimony.com/payment/callback
+PHONEPE_MOCK_MODE=true
 
 # Email Configuration (Optional - for password reset)
 EMAIL_HOST=smtp.gmail.com

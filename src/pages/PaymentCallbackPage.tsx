@@ -49,16 +49,64 @@ const PaymentCallbackPage: React.FC = () => {
         return;
       }
 
-      // Verify payment with backend
-      const response = await paymentService.verifyPayment(transactionId);
+      // Try public verification first (for callback page)
+      let response;
+      try {
+        console.log('🔍 Frontend - Attempting public verification for transaction:', transactionId);
+        response = await paymentService.verifyPaymentPublic(transactionId);
+        console.log('📥 Frontend - Public verification response:', response);
+      } catch (publicErr: any) {
+        console.log('⚠️ Frontend - Public verification failed, trying authenticated verification:', publicErr.message);
+        
+        // If public verification fails, try authenticated verification
+        try {
+          console.log('🔍 Frontend - Attempting authenticated verification for transaction:', transactionId);
+          response = await paymentService.verifyPayment(transactionId);
+          console.log('📥 Frontend - Authenticated verification response:', response);
+        } catch (authErr: any) {
+          console.error('❌ Frontend - Both verification methods failed:', authErr.message);
+          
+          // Check if it's an authentication error
+          if (authErr.message.includes('authorization denied') || authErr.message.includes('token')) {
+            setError('Please log in to view your payment status');
+            setPaymentStatus('failed');
+            return;
+          }
+          
+          throw authErr;
+        }
+      }
 
+      console.log('🔍 Frontend - Full response object:', JSON.stringify(response, null, 2));
+      console.log('🔍 Frontend - Response success:', response.success);
+      console.log('🔍 Frontend - Response paymentStatus:', response.paymentStatus);
+      console.log('🔍 Frontend - Response code:', response.code);
+      console.log('🔍 Frontend - Response subscription:', response.subscription);
+      
       if (response.success) {
-        if (response.paymentStatus === 'COMPLETED' && response.code === 'PAYMENT_SUCCESS') {
+        console.log('✅ Frontend - Response success is true, checking conditions...');
+        
+        // Check if subscription is active (regardless of payment status)
+        if (response.subscription && response.subscription.status === 'Active') {
+          console.log('✅ Frontend - Subscription is active:', response.subscription.status);
           setPaymentStatus('success');
           setSubscription(response.subscription);
           
-          // Update user context if subscription is active
-          if (response.subscription && response.subscription.status === 'Active' && user && user._id) {
+          // Update user context if user is logged in
+          if (user && user._id) {
+            updateUser({
+              ...user,
+              membershipType: response.subscription.planType,
+              membershipExpiry: response.subscription.endDate
+            });
+          }
+        } else if (response.paymentStatus === 'COMPLETED' && response.code === 'PAYMENT_SUCCESS') {
+          console.log('✅ Frontend - Payment verification successful - paymentStatus:', response.paymentStatus, 'code:', response.code);
+          setPaymentStatus('success');
+          setSubscription(response.subscription);
+          
+          // Update user context if user is logged in
+          if (response.subscription && user && user._id) {
             updateUser({
               ...user,
               membershipType: response.subscription.planType,
@@ -66,16 +114,29 @@ const PaymentCallbackPage: React.FC = () => {
             });
           }
         } else {
+          console.log('❌ Frontend - Payment conditions not met:');
+          console.log('   - Subscription status:', response.subscription?.status);
+          console.log('   - Payment status:', response.paymentStatus);
+          console.log('   - Code:', response.code);
+          console.log('   - Full response:', response);
           setPaymentStatus('failed');
           setError('Payment was not successful');
         }
       } else {
+        console.log('❌ Frontend - Response success is false:', response);
         setPaymentStatus('failed');
         setError('Payment verification failed');
       }
     } catch (err: any) {
       console.error('Payment verification error:', err);
-      setError(err.message || 'An error occurred during payment verification');
+      
+      // Check if the error is about already having an active subscription
+      if (err.message && err.message.includes('already have an active subscription')) {
+        setError('You already have an active subscription. Please check your account for subscription details.');
+      } else {
+        setError(err.message || 'An error occurred during payment verification');
+      }
+      
       setPaymentStatus('failed');
     } finally {
       setLoading(false);
@@ -211,13 +272,13 @@ const PaymentCallbackPage: React.FC = () => {
                         </ListItemIcon>
                         <ListItemText
                           primary="Status"
-                          secondary={
-                            <Chip 
-                              label={subscription.status} 
-                              color="success" 
-                              size="small" 
-                            />
-                          }
+                          secondary={subscription.status}
+                        />
+                        <Chip 
+                          label={subscription.status} 
+                          color="success" 
+                          size="small" 
+                          sx={{ ml: 1 }}
                         />
                       </ListItem>
                     </List>

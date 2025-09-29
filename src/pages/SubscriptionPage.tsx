@@ -90,15 +90,30 @@ const SubscriptionPage: React.FC = () => {
 
     try {
       setProcessing(true);
+      setError(null); // Clear any previous errors
+      
+      console.log('🔄 Starting payment process for:', {
+        planType: selectedPlan.type,
+        duration: selectedPlan.duration,
+        price: selectedPlan.price
+      });
+
       const response = await paymentService.createPaymentOrder({
         planType: selectedPlan.type as 'Premium' | 'Premium Plus',
         duration: selectedPlan.duration as any,
       });
 
+      console.log('✅ Payment order created:', response);
+
       // Redirect to PhonePe payment page
-      window.location.href = response.paymentUrl;
+      if (response.paymentUrl) {
+        window.location.href = response.paymentUrl;
+      } else {
+        throw new Error('Payment URL not received from server');
+      }
     } catch (err: any) {
-      setError(err.message);
+      console.error('❌ Payment error:', err);
+      setError(err.message || 'Payment processing failed. Please try again.');
       setProcessing(false);
     }
   };
