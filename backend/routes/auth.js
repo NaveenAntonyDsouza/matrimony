@@ -19,7 +19,7 @@ const generateToken = (id) => {
 router.post('/register', [
   body('email').trim().isEmail().normalizeEmail(),
   body('password').isLength({ min: 6 }),
-  body('phone').isMobilePhone(),
+  body('phone').matches(/^\d{10}$/).withMessage('Phone number must be 10 digits'),
   body('firstName').trim().isLength({ min: 2 }),
   body('lastName').trim().isLength({ min: 2 }),
   body('gender').isIn(['Male', 'Female']),
