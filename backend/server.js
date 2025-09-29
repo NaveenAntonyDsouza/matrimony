@@ -59,12 +59,52 @@ app.use((req, res) => {
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shaadi-clone');
+    console.log('Attempting to connect to MongoDB...');
+    console.log('MongoDB URI:', (process.env.MONGODB_URI || 'mongodb://localhost:27017/shaadi-clone').replace(/\/\/([^:]+):([^@]+)@/, '//***:***@'));
+    
+    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shaadi-clone', {
+      serverSelectionTimeoutMS: 10000, // 10 seconds timeout
+      connectTimeoutMS: 10000, // 10 seconds timeout
+      socketTimeoutMS: 45000, // 45 seconds timeout
+    });
 
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`Database: ${conn.connection.name}`);
+    
+    // Handle connection events
+    mongoose.connection.on('error', (err) => {
+      console.error('❌ MongoDB connection error:', err);
+    });
+    
+    mongoose.connection.on('disconnected', () => {
+      console.log('⚠️ MongoDB disconnected');
+    });
+    
+    mongoose.connection.on('reconnected', () => {
+      console.log('✅ MongoDB reconnected');
+    });
+    
   } catch (error) {
-    console.error('Database connection error:', error);
-    process.exit(1);
+    console.error('❌ Database connection failed:');
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    
+    if (error.code) {
+      console.error('Error code:', error.code);
+    }
+    
+    if (error.name === 'MongoServerSelectionError') {
+      console.error('💡 This usually means:');
+      console.error('   - MongoDB Atlas cluster is paused or deleted');
+      console.error('   - IP address is not whitelisted in MongoDB Atlas');
+      console.error('   - Network connectivity issues');
+      console.error('   - Invalid connection string or credentials');
+    }
+    
+    console.error('🔄 Retrying connection in 5 seconds...');
+    setTimeout(() => {
+      connectDB();
+    }, 5000);
   }
 };
 
