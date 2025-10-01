@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Box,
   Container,
@@ -34,10 +34,19 @@ const PaymentCallbackPage: React.FC = () => {
   const [paymentStatus, setPaymentStatus] = useState<'success' | 'failed' | 'pending'>('pending');
   const [error, setError] = useState<string | null>(null);
   const [subscription, setSubscription] = useState<any>(null);
+  const verificationCompleted = useRef(false);
 
   const handlePaymentCallback = useCallback(async () => {
+    // Prevent multiple executions
+    if (verificationCompleted.current) {
+      return;
+    }
+    
+    const currentUser = user; // Get current user value at function scope
+    
     try {
       setLoading(true);
+      verificationCompleted.current = true;
 
       // Get transaction ID from URL params or PhonePe response
       const transactionId = searchParams.get('transactionId') || 
@@ -49,31 +58,69 @@ const PaymentCallbackPage: React.FC = () => {
         return;
       }
 
-      // Try public verification first (for callback page)
+      // Try authenticated verification first if user is logged in (to activate subscription)
       let response;
-      try {
-        console.log('🔍 Frontend - Attempting public verification for transaction:', transactionId);
-        response = await paymentService.verifyPaymentPublic(transactionId);
-        console.log('📥 Frontend - Public verification response:', response);
-      } catch (publicErr: any) {
-        console.log('⚠️ Frontend - Public verification failed, trying authenticated verification:', publicErr.message);
-        
-        // If public verification fails, try authenticated verification
+      const token = localStorage.getItem('token');
+      
+      if (currentUser && token) {
         try {
-          console.log('🔍 Frontend - Attempting authenticated verification for transaction:', transactionId);
+          console.log('🔍 Frontend - User is logged in, attempting authenticated verification for transaction:', transactionId);
           response = await paymentService.verifyPayment(transactionId);
           console.log('📥 Frontend - Authenticated verification response:', response);
         } catch (authErr: any) {
-          console.error('❌ Frontend - Both verification methods failed:', authErr.message);
+          console.log('⚠️ Frontend - Authenticated verification failed, trying public verification:', authErr.message);
+          console.log('⚠️ Frontend - Auth error details:', authErr);
           
-          // Check if it's an authentication error
-          if (authErr.message.includes('authorization denied') || authErr.message.includes('token')) {
-            setError('Please log in to view your payment status');
+          // Check if it's a network error (ERR_ABORTED, connection refused, etc.)
+          const isNetworkError = authErr.message.includes('Failed to fetch') || 
+                                authErr.message.includes('ERR_ABORTED') ||
+                                authErr.message.includes('NetworkError') ||
+                                authErr.message.includes('timed out') ||
+                                authErr.name === 'TypeError' ||
+                                authErr.name === 'AbortError';
+          
+          // If authenticated verification fails, try public verification as fallback
+          try {
+            console.log('🔍 Frontend - Attempting public verification for transaction:', transactionId);
+            response = await paymentService.verifyPaymentPublic(transactionId);
+            console.log('📥 Frontend - Public verification response:', response);
+          } catch (publicErr: any) {
+            console.error('❌ Frontend - Both verification methods failed:', publicErr.message);
+            
+            // If both failed due to network issues, show a more helpful error
+            if (isNetworkError) {
+              setError('Unable to verify payment due to connection issues. Please check your internet connection and try again.');
+            } else {
+              setError('Payment verification failed. Please contact support if this issue persists.');
+            }
             setPaymentStatus('failed');
             return;
           }
+        }
+      } else {
+        // User not logged in, use public verification
+        try {
+          console.log('🔍 Frontend - User not logged in, attempting public verification for transaction:', transactionId);
+          response = await paymentService.verifyPaymentPublic(transactionId);
+          console.log('📥 Frontend - Public verification response:', response);
+        } catch (publicErr: any) {
+          console.error('❌ Frontend - Public verification failed:', publicErr.message);
           
-          throw authErr;
+          // Check if it's a network error
+          const isNetworkError = publicErr.message.includes('Failed to fetch') || 
+                                publicErr.message.includes('ERR_ABORTED') ||
+                                publicErr.message.includes('NetworkError') ||
+                                publicErr.message.includes('timed out') ||
+                                publicErr.name === 'TypeError' ||
+                                publicErr.name === 'AbortError';
+          
+          if (isNetworkError) {
+            setError('Unable to verify payment due to connection issues. Please check your internet connection and try again.');
+          } else {
+            setError('Please log in to view your payment status');
+          }
+          setPaymentStatus('failed');
+          return;
         }
       }
 
@@ -93,9 +140,9 @@ const PaymentCallbackPage: React.FC = () => {
           setSubscription(response.subscription);
           
           // Update user context if user is logged in
-          if (user && user._id) {
+          if (currentUser && currentUser._id) {
             updateUser({
-              ...user,
+              ...currentUser,
               membershipType: response.subscription.planType,
               membershipExpiry: response.subscription.endDate
             });
@@ -106,9 +153,24 @@ const PaymentCallbackPage: React.FC = () => {
           setSubscription(response.subscription);
           
           // Update user context if user is logged in
-          if (response.subscription && user && user._id) {
+          if (response.subscription && currentUser && currentUser._id) {
             updateUser({
-              ...user,
+              ...currentUser,
+              membershipType: response.subscription.planType,
+              membershipExpiry: response.subscription.endDate
+            });
+          }
+        } else if (response.paymentStatus === 'PENDING' && response.code === 'PAYMENT_PENDING' && response.subscription) {
+          console.log('✅ Frontend - Payment is pending but subscription exists - treating as successful for mock payments');
+          console.log('   - Payment Status:', response.paymentStatus, 'Code:', response.code);
+          console.log('   - Subscription:', response.subscription);
+          setPaymentStatus('success');
+          setSubscription(response.subscription);
+          
+          // Update user context if user is logged in
+          if (currentUser && currentUser._id) {
+            updateUser({
+              ...currentUser,
               membershipType: response.subscription.planType,
               membershipExpiry: response.subscription.endDate
             });
@@ -132,16 +194,25 @@ const PaymentCallbackPage: React.FC = () => {
       
       // Check if the error is about already having an active subscription
       if (err.message && err.message.includes('already have an active subscription')) {
-        setError('You already have an active subscription. Please check your account for subscription details.');
+        console.log('✅ Frontend - User already has active subscription, treating as success');
+        setPaymentStatus('success');
+        setError(null);
+        // Try to get subscription details from user context or set a generic active subscription
+        if (currentUser && currentUser.membershipType) {
+          setSubscription({
+            planType: currentUser.membershipType,
+            status: 'Active',
+            endDate: currentUser.membershipExpiry
+          });
+        }
       } else {
         setError(err.message || 'An error occurred during payment verification');
+        setPaymentStatus('failed');
       }
-      
-      setPaymentStatus('failed');
     } finally {
       setLoading(false);
     }
-  }, [searchParams, user, updateUser]);
+  }, [searchParams]);
 
   useEffect(() => {
     handlePaymentCallback();

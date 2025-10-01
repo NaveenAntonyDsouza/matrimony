@@ -60,33 +60,59 @@ class PaymentService {
   }
 
   async verifyPayment(transactionId: string): Promise<VerifyPaymentResponse> {
-    const response = await fetch(`${API_BASE_URL}/payments/verify/${transactionId}`, {
-      headers: this.getAuthHeaders(),
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-    const result = await response.json();
+    try {
+      const response = await fetch(`${API_BASE_URL}/payments/verify/${transactionId}`, {
+        headers: this.getAuthHeaders(),
+        signal: controller.signal,
+      });
 
-    if (!response.ok) {
-      throw new Error(result.message || 'Failed to verify payment');
+      clearTimeout(timeoutId);
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to verify payment');
+      }
+
+      return result;
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Payment verification request timed out. Please try again.');
+      }
+      throw error;
     }
-
-    return result;
   }
 
   async verifyPaymentPublic(transactionId: string): Promise<VerifyPaymentResponse> {
-    const response = await fetch(`${API_BASE_URL}/payments/verify-public/${transactionId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-    const result = await response.json();
+    try {
+      const response = await fetch(`${API_BASE_URL}/payments/verify-public/${transactionId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+      });
 
-    if (!response.ok) {
-      throw new Error(result.message || 'Failed to verify payment');
+      clearTimeout(timeoutId);
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to verify payment');
+      }
+
+      return result;
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Payment verification request timed out. Please try again.');
+      }
+      throw error;
     }
-
-    return result;
   }
 
   async getPaymentHistory(): Promise<PaymentHistoryResponse> {
