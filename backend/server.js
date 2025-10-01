@@ -34,8 +34,8 @@ const corsOptions = {
 
 // Middleware
 app.use(cors(corsOptions));
-// Explicitly handle preflight for all routes
-app.options('*', cors(corsOptions));
+// Explicitly handle preflight for API routes (Express 5 requires a named param instead of '*')
+app.options('/api/:path*', cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
