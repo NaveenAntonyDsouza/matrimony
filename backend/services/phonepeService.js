@@ -128,62 +128,64 @@ class PhonePeService {
     try {
       const { amount, userId, planType, duration, userInfo } = paymentData;
       
-      // Generate unique transaction ID
-      const transactionId = `TXN_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      // Generate unique merchant order ID
+      const merchantOrderId = `ORDER_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      // Create the request payload according to PhonePe v1 API documentation
+      // Get OAuth token for v2 API authentication
+      const accessToken = await this.getOAuthToken();
+      if (!accessToken) {
+        throw new Error('Failed to obtain OAuth access token');
+      }
+      
+      // Create the request payload according to PhonePe v2 API documentation
       const payload = {
-        merchantId: this.merchantId,
-        merchantTransactionId: transactionId,
-        merchantUserId: userId,
+        merchantOrderId: merchantOrderId,
         amount: amount * 100, // Convert to paise
-        redirectUrl: `${this.redirectUrl}?transactionId=${transactionId}`,
-        redirectMode: "REDIRECT",
-        callbackUrl: `${this.redirectUrl}?transactionId=${transactionId}`,
-        paymentInstrument: {
-          type: "PAY_PAGE"
+        paymentFlow: {
+          type: "PG_CHECKOUT",
+          message: `Payment for ${planType} subscription (${duration} months)`,
+          merchantUrls: {
+            redirectUrl: `${this.redirectUrl}?merchantOrderId=${merchantOrderId}`
+          }
+        },
+        metaInfo: {
+          udf1: planType,
+          udf2: duration.toString(),
+          udf3: userId,
+          udf4: "matrimony-subscription",
+          udf5: ""
         }
       };
 
-      // Convert payload to base64
-      const payloadMain = Buffer.from(JSON.stringify(payload)).toString('base64');
-      
-      // Generate X-VERIFY checksum
-      const apiEndpoint = '/pg/v1/pay';
-      const string = payloadMain + apiEndpoint + this.saltKey;
-      const sha256hash = crypto.createHash('sha256').update(string).digest('hex');
-      const checksum = sha256hash + '###' + this.saltIndex;
+      // Use v2 API endpoint
+      const apiEndpoint = '/checkout/v2/pay';
+      const apiUrl = `${this.baseUrl}${apiEndpoint}`;
 
-      console.log('🔄 PhonePe v1 API Request:', {
-        url: `${this.baseUrl}${apiEndpoint}`,
+      console.log('🔄 PhonePe v2 API Request:', {
+        url: apiUrl,
         payload: payload,
-        checksum: checksum.substring(0, 20) + '...'
+        hasToken: !!accessToken
       });
 
-      const response = await axios.post(
-        `${this.baseUrl}${apiEndpoint}`,
-        {
-          request: payloadMain
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-VERIFY': checksum
-          }
+      const response = await axios.post(apiUrl, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `O-Bearer ${accessToken}`
         }
-      );
+      });
 
-      console.log('📥 PhonePe v1 API Response:', {
+      console.log('📥 PhonePe v2 API Response:', {
         status: response.status,
         data: response.data
       });
 
-      // Extract payment URL from v1 API response
-      if (response.data && response.data.success && response.data.data && response.data.data.instrumentResponse && response.data.data.instrumentResponse.redirectInfo) {
+      // Extract payment URL from v2 API response
+      if (response.data && response.data.redirectUrl) {
         return {
           success: true,
-          paymentUrl: response.data.data.instrumentResponse.redirectInfo.url,
-          transactionId: transactionId,
+          paymentUrl: response.data.redirectUrl,
+          transactionId: merchantOrderId,
+          orderId: response.data.orderId,
           message: 'Payment request created successfully'
         };
       } else {
@@ -210,64 +212,60 @@ class PhonePeService {
     }
   }
 
-  // Verify payment status
-  async verifyPayment(transactionId) {
+  // Verify payment status using v2 API
+  async verifyPayment(merchantOrderId) {
     if (!this.isConfigured) {
       throw new Error('PhonePe service is not configured. Please check environment variables.');
     }
 
     // Mock mode for testing
     if (this.mockMode) {
-      console.log('🧪 Mock Mode: Simulating payment verification for transaction:', transactionId);
+      console.log('🧪 Mock Mode: Simulating payment verification for order:', merchantOrderId);
       return {
         success: true,
         data: {
-          success: true,
-          code: 'PAYMENT_SUCCESS',
-          message: 'Your payment is successful.',
-          data: {
-            merchantId: this.merchantId,
-            merchantTransactionId: transactionId,
-            transactionId: transactionId,
-            amount: 159900, // Mock amount
-            state: 'COMPLETED',
-            responseCode: 'SUCCESS',
-            paymentInstrument: {
-              type: 'UPI'
-            }
-          }
+          orderId: `OMO${Date.now()}`,
+          state: 'COMPLETED',
+          amount: 159900, // Mock amount
+          paymentDetails: [{
+            paymentMode: 'UPI_QR',
+            transactionId: `OM${Date.now()}`,
+            timestamp: Date.now(),
+            amount: 159900,
+            state: 'COMPLETED'
+          }]
         }
       };
     }
     
     try {
-      // Use v1 API endpoint for payment status verification
-      const statusEndpoint = `/pg/v1/status/${this.merchantId}/${transactionId}`;
+      // Get OAuth token for v2 API authentication
+      const accessToken = await this.getOAuthToken();
+      if (!accessToken) {
+        throw new Error('Failed to obtain OAuth access token');
+      }
       
-      // Generate X-VERIFY checksum for status check
-      const string = statusEndpoint + this.saltKey;
-      const sha256hash = crypto.createHash('sha256').update(string).digest('hex');
-      const checksum = sha256hash + '###' + this.saltIndex;
+      // Use v2 API endpoint for order status verification
+      const statusEndpoint = `/checkout/v2/order/${merchantOrderId}/status`;
+      const apiUrl = `${this.baseUrl}${statusEndpoint}`;
       
-      console.log('🔍 PhonePe v1 API Verification:', {
-        transactionId,
-        merchantId: this.merchantId,
+      console.log('🔍 PhonePe v2 API Verification:', {
+        merchantOrderId,
         endpoint: statusEndpoint,
-        checksum: checksum.substring(0, 20) + '...'
+        hasToken: !!accessToken
       });
 
-      const response = await axios.get(
-        `${this.baseUrl}${statusEndpoint}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-VERIFY': checksum,
-            'accept': 'application/json'
-          }
+      const response = await axios.get(apiUrl, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `O-Bearer ${accessToken}`
+        },
+        params: {
+          details: false // Get only latest attempt details
         }
-      );
+      });
 
-      console.log('📥 PhonePe v1 API Verification Response:', {
+      console.log('📥 PhonePe v2 API Verification Response:', {
         status: response.status,
         data: response.data
       });
@@ -292,17 +290,31 @@ class PhonePeService {
     }
     
     try {
-      const { response } = callbackData;
-      const decodedResponse = JSON.parse(Buffer.from(response, 'base64').toString());
+      // For v2 API, we should verify the payment status using the order ID
+      // instead of decoding callback response
+      const { merchantOrderId } = callbackData;
       
-      return {
-        success: true,
-        transactionId: decodedResponse.merchantTransactionId,
-        status: decodedResponse.state,
-        code: decodedResponse.code,
-        message: decodedResponse.responseCode,
-        data: decodedResponse
-      };
+      if (!merchantOrderId) {
+        throw new Error('Merchant order ID is required for payment verification');
+      }
+      
+      // Verify payment status using v2 API
+      const verificationResult = await this.verifyPayment(merchantOrderId);
+      
+      if (verificationResult.success && verificationResult.data) {
+        const orderData = verificationResult.data;
+        return {
+          success: true,
+          transactionId: merchantOrderId,
+          orderId: orderData.orderId,
+          status: orderData.state,
+          amount: orderData.amount,
+          paymentDetails: orderData.paymentDetails,
+          data: orderData
+        };
+      } else {
+        throw new Error('Payment verification failed');
+      }
     } catch (error) {
       console.error('PhonePe callback handling error:', error);
       return {

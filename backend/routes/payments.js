@@ -150,16 +150,27 @@ router.post('/callback', async (req, res) => {
   try {
     console.log('📥 Callback received:', JSON.stringify(req.body, null, 2));
     
-    const callbackResult = await phonepeService.handlePaymentCallback(req.body);
+    // For v2 API, we expect merchantOrderId in the callback
+    const { merchantOrderId } = req.body;
+    
+    if (!merchantOrderId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Merchant order ID is required'
+      });
+    }
+    
+    const callbackResult = await phonepeService.handlePaymentCallback({ merchantOrderId });
     
     if (!callbackResult.success) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid callback data'
+        message: 'Invalid callback data',
+        error: callbackResult.error
       });
     }
 
-    const { transactionId, status, code } = callbackResult;
+    const { transactionId, status, orderId } = callbackResult;
 
     // Find the pending subscription
     const subscription = await Subscription.findOne({
@@ -174,7 +185,8 @@ router.post('/callback', async (req, res) => {
       });
     }
 
-    if (status === 'COMPLETED' && code === 'PAYMENT_SUCCESS') {
+    // For v2 API, check if payment is successful
+    if (status === 'COMPLETED' || status === 'SUCCESS') {
       // Payment successful - activate subscription
       const startDate = new Date();
       const endDate = new Date(startDate);
@@ -184,6 +196,7 @@ router.post('/callback', async (req, res) => {
       subscription.status = 'Active';
       subscription.startDate = startDate;
       subscription.endDate = endDate;
+      subscription.orderId = orderId; // Store the PhonePe order ID
       await subscription.save();
 
       // Update user membership
@@ -205,8 +218,7 @@ router.post('/callback', async (req, res) => {
       return res.json({
         success: false,
         message: 'Payment failed',
-        status,
-        code
+        status
       });
     }
 

@@ -37,6 +37,10 @@ const subscriptionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  orderId: {
+    type: String,
+    required: false // Optional field for PhonePe v2 API order ID
+  },
   paymentMethod: {
     type: String,
     enum: ['Credit Card', 'Debit Card', 'Net Banking', 'UPI', 'Wallet', 'PhonePe'],
